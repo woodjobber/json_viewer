@@ -140,11 +140,19 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(
-              child: const Icon(
-                Icons.remove_circle_outline,
-                color: Colors.grey,
-                size: 16,
-              ),
+              child: !_shrink
+                  ? Image.asset(
+                      'assets/icon_minus.png',
+                      width: 16,
+                      height: 16,
+                      color: Colors.redAccent,
+                    )
+                  : Image.asset(
+                      'assets/icon_add.png',
+                      width: 16,
+                      height: 16,
+                      color: Colors.blueAccent,
+                    ),
               onTap: () {
                 setState(() => _shrink = true);
                 widget.shrinkCallBack?.call(_shrink);
