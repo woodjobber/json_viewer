@@ -239,8 +239,8 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
       if (obj == null) {
         spans.add(spaceSpan);
         spans.add(TextSpan(text: "\"$key\"", style: style.keyStyle));
-        spans.add(TextSpan(text: ": ", style: style.symbolStyle));
-        spans.add(TextSpan(text: null, style: style.nullStyle));
+        spans.add(TextSpan(text: ":  ", style: style.symbolStyle));
+        spans.add(TextSpan(text: null.toString(), style: style.nullStyle));
       } else if (obj is String) {
         spans.addString(key, obj, style, spaceSpan, widget.urlSpanBuilder);
       } else if (obj is num) {
@@ -320,7 +320,7 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
       bool needAddSymbol = true;
       if (obj == null) {
         spans.add(spaceSpan);
-        spans.add(TextSpan(text: null, style: style.nullStyle));
+        spans.add(TextSpan(text: null.toString(), style: style.nullStyle));
       } else if (obj is num) {
         spans.add(spaceSpan);
         spans.add(TextSpan(text: "$obj", style: style.numberStyle));
