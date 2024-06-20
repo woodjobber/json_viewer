@@ -62,7 +62,7 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
   bool _isList = false;
 
   bool _isError = false;
-
+  bool _isExpaned = false;
   @override
   void initState() {
     super.initState();
@@ -140,7 +140,7 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(
-              child: !_shrink
+              child: !_isExpaned
                   ? Image.asset(
                       'assets/icon_minus.png',
                       width: 16,
@@ -154,6 +154,7 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
                       color: Colors.blueAccent,
                     ),
               onTap: () {
+                _isExpaned = !_isExpaned;
                 setState(() => _shrink = true);
                 widget.shrinkCallBack?.call(_shrink);
               },
