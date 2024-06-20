@@ -55,10 +55,10 @@ class JsonShrinkWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _JsonShrinkWidgetState createState() => _JsonShrinkWidgetState();
+  JsonShrinkWidgetState createState() => JsonShrinkWidgetState();
 }
 
-class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
+class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
   bool _shrink = false;
   final List<InlineSpan> _spans = [];
   bool _isList = false;
@@ -111,13 +111,16 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
 
     String? text = startTextSpan?.text?.trim();
     String? endText = endTextSpan?.text?.trim();
-    String startSymbol = text == "{" || text == "[" ? "" : (_isList ? "[" : "{");
+    String startSymbol =
+        text == "{" || text == "[" ? "" : (_isList ? "[" : "{");
     String endSymbol = _isList ? "]" : "}";
     return [
       startSpan,
-      if (widget.jsonKey.isNotEmpty) TextSpan(text: '"${widget.jsonKey}"', style: widget.style.keyStyle),
+      if (widget.jsonKey.isNotEmpty)
+        TextSpan(text: '"${widget.jsonKey}"', style: widget.style.keyStyle),
       TextSpan(
-          text: '${widget.jsonKey.isNotEmpty ? ":" : ""}$startSymbol...$endSymbol',
+          text:
+              '${widget.jsonKey.isNotEmpty ? ": " : ""}$startSymbol...$endSymbol',
           style: widget.style.symbolStyle,
           recognizer: TapGestureRecognizer()
             ..onTap = () {
@@ -149,25 +152,17 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
                 widget.shrinkCallBack?.call(_shrink);
               },
             ),
+            // const SizedBox(width: 4),
+            // GestureDetector(
+            //   child: const Icon(
+            //     Icons.content_copy_rounded,
+            //     color: Colors.grey,
+            //     size: 16,
+            //   ),
+            //   onTap: () => Clipboard.setData(
+            //       ClipboardData(text: JsonFormatter.format(widget.json))),
+            // ),
             const SizedBox(width: 4),
-            GestureDetector(
-              child: const Icon(
-                Icons.content_copy_rounded,
-                color: Colors.grey,
-                size: 16,
-              ),
-              onTap: () => Clipboard.setData(ClipboardData(text: JsonFormatter.format(widget.json))),
-            ),
-            const SizedBox(width: 4),
-            if (kDebugMode)
-              GestureDetector(
-                onTap: () => debugPrint(JsonFormatter.format(widget.json)),
-                child: const Icon(
-                  Icons.print,
-                  color: Colors.grey,
-                  size: 16,
-                ),
-              ),
           ],
         ),
       ),
@@ -211,7 +206,6 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
         dynamic json = jsonDecode(data);
         _parseSpans(json);
       } catch (e) {
-        print(e);
         _isError = true;
       }
     }
@@ -225,8 +219,10 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
     String indentation = " ",
     String key = "",
   }) {
-    final TextSpan symbolSpan = TextSpan(text: indentation * deep, style: style.indentationStyle);
-    final TextSpan spaceSpan = TextSpan(text: indentation * (deep + 1), style: style.indentationStyle);
+    final TextSpan symbolSpan =
+        TextSpan(text: indentation * deep, style: style.indentationStyle);
+    final TextSpan spaceSpan =
+        TextSpan(text: indentation * (deep + 1), style: style.indentationStyle);
     List<InlineSpan> spans = [];
     if (key.isNotEmpty) {
       spans.add(symbolSpan);
@@ -245,8 +241,8 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
       if (obj == null) {
         spans.add(spaceSpan);
         spans.add(TextSpan(text: "\"$key\"", style: style.keyStyle));
-        spans.add(TextSpan(text: ":", style: style.symbolStyle));
-        spans.add(TextSpan(text: "$obj", style: style.symbolStyle));
+        spans.add(TextSpan(text: ": ", style: style.symbolStyle));
+        spans.add(TextSpan(text: null, style: style.nullStyle));
       } else if (obj is String) {
         spans.addString(key, obj, style, spaceSpan, widget.urlSpanBuilder);
       } else if (obj is num) {
@@ -290,8 +286,10 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
     String indentation = " ",
     String key = "",
   }) {
-    final TextSpan symbolSpan = TextSpan(text: indentation * deep, style: style.indentationStyle);
-    final TextSpan spaceSpan = TextSpan(text: indentation * (deep + 1), style: style.indentationStyle);
+    final TextSpan symbolSpan =
+        TextSpan(text: indentation * deep, style: style.indentationStyle);
+    final TextSpan spaceSpan =
+        TextSpan(text: indentation * (deep + 1), style: style.indentationStyle);
     List<InlineSpan> spans = [];
     if (data.isEmpty) {
       if (key.isNotEmpty) {
@@ -300,7 +298,7 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
           TextSpan(
             text: "\"$key\"",
             style: style.keyStyle,
-            children: [TextSpan(text: ':[ ]', style: style.symbolStyle)],
+            children: [TextSpan(text: ': [ ]', style: style.symbolStyle)],
           )
         ];
       }
@@ -313,7 +311,7 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
     if (key.isNotEmpty) {
       spans.add(symbolSpan);
       spans.add(TextSpan(text: "\"$key\"", style: style.keyStyle));
-      spans.add(TextSpan(text: ':[', style: style.symbolStyle));
+      spans.add(TextSpan(text: ': [', style: style.symbolStyle));
     } else {
       spans.add(symbolSpan);
       spans.add(TextSpan(text: "[", style: style.symbolStyle));
@@ -324,7 +322,7 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
       bool needAddSymbol = true;
       if (obj == null) {
         spans.add(spaceSpan);
-        spans.add(TextSpan(text: "$obj", style: style.numberStyle));
+        spans.add(TextSpan(text: null, style: style.nullStyle));
       } else if (obj is num) {
         spans.add(spaceSpan);
         spans.add(TextSpan(text: "$obj", style: style.numberStyle));
@@ -340,7 +338,8 @@ class _JsonShrinkWidgetState extends State<JsonShrinkWidget> {
                 text: '"$value"',
                 style: style.urlStyle,
                 recognizer: LongPressGestureRecognizer()
-                  ..onLongPress = () => Clipboard.setData(ClipboardData(text: value)),
+                  ..onLongPress =
+                      () => Clipboard.setData(ClipboardData(text: value)),
               ),
             );
           }

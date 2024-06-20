@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 class JsonFormatter {
   JsonFormatter._();
 
@@ -26,7 +28,7 @@ class JsonFormatter {
       }
       return buffer.toString();
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
     return "";
   }
@@ -42,7 +44,7 @@ class JsonFormatter {
     String space = indentation * (count + 1);
     StringBuffer buffer = StringBuffer();
     if (key.isNotEmpty) {
-      buffer.write("$symbolSpace\"$key\":{\n");
+      buffer.write("$symbolSpace\"$key\": {\n");
     } else {
       buffer.write("$symbolSpace{\n");
     }
@@ -51,11 +53,11 @@ class JsonFormatter {
       String key = keys[i];
       Object? obj = data[key];
       if (obj == null) {
-        buffer.write("$space\"$key\":$obj");
+        buffer.write("$space\"$key\": $obj");
       } else if (obj is String) {
-        buffer.write('$space\"$key\":"$obj"');
+        buffer.write('$space\"$key\": "$obj"');
       } else if (obj is num || obj is bool) {
-        buffer.write('$space\"$key\":$obj');
+        buffer.write('$space\"$key\": $obj');
       } else if (obj is Map) {
         buffer.write(_parseMap(obj,
             count: count + 1, indentation: indentation, key: key));
@@ -84,14 +86,14 @@ class JsonFormatter {
     String space = indentation * (deep + 1);
     if (data.isEmpty) {
       if (key.isNotEmpty) {
-        return '$symbolSpace\"$key\":[]';
+        return '$symbolSpace\"$key\": []';
       }
       return "$symbolSpace[]";
     }
     StringBuffer buffer = StringBuffer();
     //解析list
     if (key.isNotEmpty) {
-      buffer.write("$symbolSpace\"$key\":[\n");
+      buffer.write("$symbolSpace\"$key\": [\n");
     } else {
       buffer.write("$symbolSpace[\n");
     }

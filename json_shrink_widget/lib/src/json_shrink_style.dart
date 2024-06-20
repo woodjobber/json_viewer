@@ -6,6 +6,9 @@ class JsonShrinkStyle {
   //花括号的颜色
   final TextStyle? symbolStyle;
 
+  //null值的颜色
+  final TextStyle? nullStyle;
+
   //字段名的颜色
   final TextStyle? keyStyle;
 
@@ -40,6 +43,7 @@ class JsonShrinkStyle {
     this.boolStyle = const TextStyle(
         color: Colors.yellowAccent, fontWeight: FontWeight.bold),
     this.indentationStyle = const TextStyle(color: Colors.transparent),
+    this.nullStyle = const TextStyle(color: Colors.redAccent),
     this.size = const Size(50, 50),
   });
 
@@ -57,6 +61,7 @@ class JsonShrinkStyle {
     this.boolStyle = const TextStyle(
         color: Colors.yellowAccent, fontWeight: FontWeight.bold),
     this.indentationStyle = const TextStyle(color: Colors.transparent),
+    this.nullStyle = const TextStyle(color: Colors.redAccent),
     this.size = const Size(50, 50),
   });
 }
