@@ -145,13 +145,13 @@ class JsonShrinkWidgetState extends State<JsonShrinkWidget> {
                       'assets/icon_minus.png',
                       width: 16,
                       height: 16,
-                      color: Colors.redAccent,
+                      package: 'json_shrink_widget',
                     )
                   : Image.asset(
                       'assets/icon_add.png',
                       width: 16,
                       height: 16,
-                      color: Colors.blueAccent,
+                      package: 'json_shrink_widget',
                     ),
               onTap: () {
                 _isExpaned = !_isExpaned;
