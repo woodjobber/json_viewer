@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:json_shrink_widget/src/inline_span_ext.dart';
-import 'package:json_shrink_widget/src/json_formatter.dart';
 import 'package:json_shrink_widget/src/json_shrink_style.dart';
 
 /// @date 26/7/22
